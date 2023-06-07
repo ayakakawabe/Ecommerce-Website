@@ -1,0 +1,36 @@
+<script setup lang="ts">
+import type { ItemType } from '@/interfaces';
+
+const allItemList=new Map<number,ItemType>();
+allItemList.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+allItemList.set(2,{id:2,name:"p2",price:1100,imgUrl:"http://placehold.jp/400x400.png",description:"hogehoge"});
+allItemList.set(3,{id:3,name:"p3",price:1200,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+allItemList.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+allItemList.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+
+</script>
+
+<template>
+    <div class="topImage">
+        <img src="http://placehold.jp/3d4070/ffffff/1920x1200.png">
+    </div>
+    <h1 class="categoryTitle">all products</h1>
+    <div>
+        <ul class="itemList">
+            <li v-for="[id,item] in allItemList"><img v-bind:src="item.imgUrl"><p>{{ item.name }}</p><p>￥{{ item.price }}</p></li>
+        </ul>
+    </div>
+</template>
+
+<style scoped>
+li{
+    list-style: none;
+}
+ul{
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+</style>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted,watch,ref } from 'vue';
 import type {ItemType,NewsType} from "@/interfaces";
 
 const slideShowImages=["http://placehold.jp/3d4070/ffffff/1920x1200.png","http://placehold.jp/703e3e/ffffff/1920x1200.png","http://placehold.jp/70673e/ffffff/1920x1200.png"];
-let slideShowNumber:number=0;
+let slideShowNumber=ref(0);
 const changeSlideNumber=(slideNumber:number,num:number,Images:string[]):number=>{
     let result=slideNumber;
     if(slideNumber+num>=0 && slideNumber+num<Images.length){
@@ -15,16 +15,51 @@ const changeSlideNumber=(slideNumber:number,num:number,Images:string[]):number=>
     }
     return result;
 };
+let elementSlideShowImg:HTMLImageElement;
+let toolbar0:HTMLElement;
+let toolbar1:HTMLElement;
+let toolbar2:HTMLElement;
 
 onMounted(
     ():void=>{
-    const elementSlideShowImg=document.getElementById("slideshow_img") as HTMLImageElement;
+    elementSlideShowImg=document.getElementById("slideshow_img") as HTMLImageElement;
+    toolbar0=document.getElementsByClassName("slideshow_0")[0].children[0] as HTMLElement;
+    toolbar1=document.getElementsByClassName("slideshow_1")[0].children[0] as HTMLElement;
+    toolbar2=document.getElementsByClassName("slideshow_2")[0].children[0] as HTMLElement;
+    toolbar0.style.color="#3a3838";
     setInterval(():void=>{
-        slideShowNumber=changeSlideNumber(slideShowNumber,1,slideShowImages);
-        elementSlideShowImg.src=slideShowImages[slideShowNumber];
-        },4000);
+        slideShowNumber.value=changeSlideNumber(slideShowNumber.value,1,slideShowImages);
+        },6000);
     }
-)
+);
+
+const slideShowToolbarClick_0=():void=>{
+    slideShowNumber.value=0;
+};
+const slideShowToolbarClick_1=():void=>{
+    slideShowNumber.value=1;
+};
+const slideShowToolbarClick_2=():void=>{
+    slideShowNumber.value=2;
+};
+
+watch(slideShowNumber,
+():void=>{
+    elementSlideShowImg.src=slideShowImages[slideShowNumber.value];
+    if(slideShowNumber.value==0){
+        toolbar0.style.color="#3a3838";
+        toolbar1.style.color="#e3e3e3";
+        toolbar2.style.color="#e3e3e3";
+    }else if(slideShowNumber.value==1){
+        toolbar0.style.color="#e3e3e3";
+        toolbar1.style.color="#3a3838";
+        toolbar2.style.color="#e3e3e3";
+    }else{
+        toolbar0.style.color="#e3e3e3";
+        toolbar1.style.color="#e3e3e3";
+        toolbar2.style.color="#3a3838";
+    }
+})
 
 const newsList=new Map<number,NewsType>();
 newsList.set(1,{date:"2023-01-01",title:"old news",description:"hogehoge"});
@@ -47,9 +82,9 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
             <img id="slideshow_img" src="http://placehold.jp/3d4070/ffffff/1920x1200.png">
         </div>
         <div class="slideshow_toolbar">
-            <div class="slideshow_0"><p>・</p></div>
-            <div class="slideshow_1"><p>・</p></div>
-            <div class="slideshow_2"><p>・</p></div>
+            <div class="slideshow_0"><p v-on:click="slideShowToolbarClick_0">・</p></div>
+            <div class="slideshow_1"><p v-on:click="slideShowToolbarClick_1">・</p></div>
+            <div class="slideshow_2"><p v-on:click="slideShowToolbarClick_2">・</p></div>
         </div>
     </div>
     <section class="news_sec">
@@ -130,14 +165,15 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
     height: 50px;
     justify-content:center;
     position: relative;
-    bottom: 3.5em;
+    bottom: 5.5em;
 }
 .slideshow_toolbar *{
     margin: 0;
     padding: 0;
-    color: #575757;
+    color:#e3e3e3;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 2.0em;
+    cursor: pointer;
 }
 
 /*news*/
@@ -191,7 +227,6 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
     text-align: left;
     width: 400px;
     height: 320px;
-    color: #3a3838;
 }
 .item_description .name{
     padding-top: 20px;

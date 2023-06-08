@@ -18,7 +18,7 @@ allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400
     <h1 class="categoryTitle">all products</h1>
     <div>
         <ul class="itemList">
-            <li v-for="[id,item] in allItemList"><img v-bind:src="item.imgUrl"><p>{{ item.name }}</p><p>￥{{ item.price }}</p></li>
+            <li v-for="[id,item] in allItemList"><img v-bind:src="item.imgUrl"><div class="description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></li>
         </ul>
     </div>
 </template>
@@ -26,11 +26,30 @@ allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400
 <style scoped>
 li{
     list-style: none;
+    background-color: #ededed;
+    margin: 20px;
 }
 ul{
     padding-left: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+.description{
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.description *{
+    margin: 0;
+}
+.description .name{
+    padding: 60px 40px 40px 40px;
+}
+.description .price{
+    text-align:right;
+    margin-top: auto;
+    padding: 40px 40px 60px 40px;
 }
 </style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted,watch,ref } from 'vue';
-import type {ItemType,NewsType} from "@/interfaces";
+import { onMounted,watch,ref,inject } from 'vue';
+import { RouterLink } from 'vue-router';
+import type {ItemType,NewsType,CategoryType} from "@/interfaces";
 
 const slideShowImages=["http://placehold.jp/3d4070/ffffff/1920x1200.png","http://placehold.jp/703e3e/ffffff/1920x1200.png","http://placehold.jp/70673e/ffffff/1920x1200.png"];
 let slideShowNumber=ref(0);
@@ -73,6 +74,8 @@ newItems.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.pn
 newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 
+const categoryList=inject("categoryList") as Map<string,CategoryType>;
+
 </script>
 
 <template>
@@ -107,52 +110,18 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
     </section>
     <section>
         <h1>CATEGORY</h1>
-        <div class="category">
-            <div class="lace">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">レース・布</a>
-            </div>
-            <div class="accessory">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">アクセサリー</a>
-            </div>
-            <div class="accessoryparts">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">アクセサリーパーツ</a>
-            </div>
-            <div class="button">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">ボタン</a>
-            </div>
-            <div class="paper">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">ペーパー（ポストカード・雑誌）</a>
-            </div>
-            <div class="doll">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">ドール</a>
-            </div>
-            <div class="interior">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">インテリア雑貨</a>
-            </div>
-            <div class="kitchen">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">キッチン雑貨</a>
-            </div>
-            <div class="ivyoriginal">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">Ivyオリジナル</a>
-            </div>
-            <div class="other">
-                <a href="#"><img src="http://placehold.jp/500x350.png"></a>
-                <a href="#" class="text_link">その他</a>
-            </div>
-        </div>
+        <ul class="category">
+            <li v-for="[id,list] in categoryList" v-bind:key="id">
+                <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}"><img v-bind:src="list.imgUrl">{{ list.titleJP }}</RouterLink>
+            </li>
+        </ul>
     </section>    
 </template>
 
 <style scoped>
+h1{
+    padding-left: 25px;
+}
 /*slide show image*/
 .slideshow{
     text-align: center;
@@ -243,25 +212,25 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 0;
 }
 .category *{
-    margin: 10px;
+    margin: 10px 10px 30px 10px;
     width: 40%;
     text-align: center;
+}
+.category li{
+    list-style: none;
+
 }
 .category a{
     display: block;
     width: 80%;
     margin: auto;
+    text-decoration: none;
 }
 .category img{
     width: 100%;
     margin: 0;
 }
-.category .text_link{
-    display: inline;
-    text-decoration: none;
-    color: #323232;
-}
-
 </style>

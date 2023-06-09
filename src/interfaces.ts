@@ -11,3 +11,9 @@ export interface NewsType{
     title:string,
     description:string
 }
+
+export interface CategoryType{
+    title:string,
+    titleJP:string,
+    imgUrl:string
+}

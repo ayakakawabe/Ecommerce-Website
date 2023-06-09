@@ -1,5 +1,21 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import {reactive,provide} from "vue";
+import type { CategoryType } from './interfaces';
+
+const categoryList=new Map<string,CategoryType>();
+categoryList.set("lace",{title:"Lace",titleJP:"レース・布",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("accessories",{title:"Accessories",titleJP:"アクセサリー",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("parts",{title:"Accressories Parts",titleJP:"アクセサリーパーツ",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("button",{title:"Button",titleJP:"ボタン",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("paper",{title:"Paper",titleJP:"ペーパー(ポストカード・雑誌)",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("doll",{title:"Doll",titleJP:"ドール",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("interior",{title:"Interior",titleJP:"インテリア雑貨",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("kitchen",{title:"Kitchen",titleJP:"キッチン雑貨",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("original",{title:"Ivy Original",titleJP:"Ivyオリジナル",imgUrl:"http://placehold.jp/500x350.png"});
+categoryList.set("others",{title:"Others",titleJP:"その他",imgUrl:"http://placehold.jp/500x350.png"});
+
+provide("categoryList",reactive(categoryList));
 
 const navOpen=():void=>{
   document.getElementsByTagName("nav")[0].classList.add("nav_show");
@@ -30,7 +46,9 @@ const navClose=():void=>{
       <div class="nav_category">
         <p>CATEGORY</p>
         <ul>
-          <li><a href="#">レース・布</a></li>
+          <li v-for="[id,list] in categoryList" v-bind:key="id">
+            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}">{{ list.titleJP }}</RouterLink>>
+          </li>
           <li><a href="#">アクセサリー</a></li>
           <li><a href="#">アクセサリーパーツ</a></li>
           <li><a href="#">ボタン</a></li>

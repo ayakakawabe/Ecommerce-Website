@@ -15,6 +15,13 @@ const routerSetting:RouteRecordRaw[]=[
       return import("@/views/AllItems.vue");
     }
   },
+  {
+    path:"/category/:category",
+    name:"CategoryItems",
+    component:()=>{
+      return import("@/views/CategoryItems.vue");
+    },
+  },
 ];
 
 const router = createRouter({

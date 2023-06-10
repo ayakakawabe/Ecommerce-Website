@@ -22,11 +22,21 @@ const routerSetting:RouteRecordRaw[]=[
       return import("@/views/CategoryItems.vue");
     },
   },
+  {
+    path:"/item/:id",
+    name:"Item",
+    component:()=>{
+      return import("@/views/Item.vue")
+    }
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routerSetting
+  routes: routerSetting,
+  scrollBehavior(to,from,savedPosition){
+    return {top:0}
+  },
 });
 
 export default router;

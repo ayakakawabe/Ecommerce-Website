@@ -17,3 +17,11 @@ export interface CategoryType{
     titleJP:string,
     imgUrl:string
 }
+
+export interface ItemTypeLong{
+    id:number,
+    name:string,
+    price:number,
+    imgUrl:string[],
+    description:string
+}

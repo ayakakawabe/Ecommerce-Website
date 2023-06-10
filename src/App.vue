@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import {reactive,provide} from "vue";
-import type { CategoryType } from './interfaces';
+import type { CategoryType,ItemType } from './interfaces';
 
 const categoryList=new Map<string,CategoryType>();
 categoryList.set("lace",{title:"Lace",titleJP:"レース・布",imgUrl:"http://placehold.jp/500x350.png"});
@@ -16,6 +16,15 @@ categoryList.set("original",{title:"Ivy Original",titleJP:"Ivyオリジナル",i
 categoryList.set("others",{title:"Others",titleJP:"その他",imgUrl:"http://placehold.jp/500x350.png"});
 
 provide("categoryList",reactive(categoryList));
+
+const newItems=new Map<number,ItemType>();
+newItems.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(2,{id:2,name:"p2",price:1100,imgUrl:"http://placehold.jp/400x400.png",description:"hogehoge"});
+newItems.set(3,{id:3,name:"p3",price:1200,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+
 
 const navOpen=():void=>{
   document.getElementsByTagName("nav")[0].classList.add("nav_show");
@@ -42,22 +51,13 @@ const navClose=():void=>{
       </div>
     </div>
     <nav class="nav">
-      <div class="nav_close"><img src="./assets/icon/close_icon.png" alt="閉じる" @click="navClose"></div>
+      <div class="nav_close"><img src="./assets/icon/close_icon.png" alt="閉じる" v-on:click="navClose"></div>
       <div class="nav_category">
         <p>CATEGORY</p>
         <ul>
           <li v-for="[id,list] in categoryList" v-bind:key="id">
-            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}">{{ list.titleJP }}</RouterLink>>
+            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}" v-on:click="navClose">{{ list.titleJP }}</RouterLink>
           </li>
-          <li><a href="#">アクセサリー</a></li>
-          <li><a href="#">アクセサリーパーツ</a></li>
-          <li><a href="#">ボタン</a></li>
-          <li><a href="#">ペーパー（ポストカード・雑誌）</a></li>
-          <li><a href="#">ドール</a></li>
-          <li><a href="#">インテリア雑貨</a></li>
-          <li><a href="#">キッチン雑貨</a></li>
-          <li><a href="#">Ivyオリジナル</a></li>
-          <li><a href="#">その他</a></li>
         </ul>
       </div>
       <div class="nav_other">
@@ -80,17 +80,14 @@ const navClose=():void=>{
     <div class="links">
       <h2>CATEGORY</h2>
       <div class="footer_caregory">
-        <RouterLink v-bind:to="{name:'AllItems'}">全商品一覧</RouterLink>
-        <p><a href="#">レース・布</a></p>
-        <p><a href="#">アクセサリー</a></p>
-        <p><a href="#">アクセサリーパーツ</a></p>
-        <p><a href="#">ボタン</a></p>
-        <p><a href="#">ペーパー（ポストカード・雑誌）</a></p>
-        <p><a href="#">ドール</a></p>
-        <p><a href="#">インテリア雑貨</a></p>
-        <p><a href="#">キッチン雑貨</a></p>
-        <p><a href="#">Ivyオリジナル</a></p>
-        <p><a href="#">その他</a></p>
+        <ul>
+          <li>
+            <RouterLink v-bind:to="{name:'AllItems'}">全商品一覧</RouterLink>
+          </li>
+          <li v-for="[id,list] in categoryList" v-bind:key="id">
+            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}">{{ list.titleJP }}</RouterLink>>
+          </li>
+        </ul>
       </div>
       <h2>SHOPPING GUIDE</h2>
       <div class="footer_guide">
@@ -237,6 +234,9 @@ footer{
     color: #dedede;
     text-decoration: none;
 }
+.links li{
+  list-style: none;
+}
 footer h1,footer h2{
     color: #dedede;
 }
@@ -267,7 +267,7 @@ footer h1,footer h2{
     width: 35px;
     padding-right: 10px;
 }
-footer div p :hover{
+footer div li :hover{
     color:#898989;
 }
 .line_add_button a:hover{

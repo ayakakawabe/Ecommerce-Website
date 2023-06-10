@@ -104,7 +104,7 @@ const categoryList=inject("categoryList") as Map<string,CategoryType>;
         <h1>NEW ITEMS</h1>
         <div class="newitems_slide">
             <div class="item" v-for="[id,item] in newItems">
-                <a href="#"><img v-bind:src=item.imgUrl><div class="item_description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></a>
+                <RouterLink v-bind:to="{name:'Item',params:{id:item.id}}"><img v-bind:src=item.imgUrl><div class="item_description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></RouterLink>
             </div>
         </div>
     </section>

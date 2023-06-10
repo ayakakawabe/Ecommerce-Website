@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { ItemType } from '@/interfaces';
+import router from '@/router';
 import { watch } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { useRoute, type Router} from 'vue-router';
 
 const route=useRoute();
-const categoryTitle=route.params.category;
-
+let categoryTitle:string;
+categoryTitle=route.params.category as string;
 
 const allItemList=new Map<number,ItemType>();
 allItemList.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
@@ -15,10 +16,10 @@ allItemList.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400
 allItemList.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 
-//このコンポーネントだけ再描画するようにしたい
-onBeforeRouteUpdate(()=>{
-    location.reload()
-})
+watch(route,():void=>{
+    categoryTitle=route.params.category as string; 
+    //商品データの変更も追加する   
+});
 
 </script>
 
@@ -29,7 +30,8 @@ onBeforeRouteUpdate(()=>{
     <h1 class="categoryTitle">{{ categoryTitle }}</h1>
     <div>
         <ul class="itemList">
-            <li v-for="[id,item] in allItemList"><img v-bind:src="item.imgUrl"><div class="description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></li>
+            <li v-for="[id,item] in allItemList">
+                <RouterLink v-bind:to="{name:'Item',params:{id:item.id}}"><img v-bind:src="item.imgUrl"><div class="description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></RouterLink></li>
         </ul>
     </div>
 </template>

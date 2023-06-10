@@ -1,6 +1,14 @@
-# ivy-webapp-sample
+# 概要
 
-This template should help get you started developing with Vue 3 in Vite.
+ECサイトのサンプル(フロントエンドのみ)
+
+フレームワーク：Vue
+
+言語：TypeScript
+
+# Vue.jsについて
+
+Vueの説明
 
 ## Recommended IDE Setup
 

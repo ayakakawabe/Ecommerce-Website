@@ -29,6 +29,19 @@ const routerSetting:RouteRecordRaw[]=[
       return import("@/views/Item.vue")
     }
   },
+  {
+    path:"/allnews",
+    name:"AllNews",
+    component:()=>{
+      return import("@/views/AllNews.vue")
+    }
+  },{
+    path:"/news/:id",
+    name:"News",
+    component:()=>{
+      return import("@/views/News.vue")
+    }
+  }
 ];
 
 const router = createRouter({

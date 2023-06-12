@@ -94,11 +94,11 @@ const categoryList=inject("categoryList") as Map<string,CategoryType>;
         <h1>NEWS</h1>
         <div class="news_box">
             <div class="news" v-for="[id,news] in newsList">
-                <p>{{ news.date }}</p>
-                <a href="#">{{ news.title }}</a>
+                <p class="date">{{ news.date }}</p>
+                <RouterLink v-bind:to="{name:'News',params:{id:id}}" class="title">{{ news.title }}</RouterLink>
             </div>
         </div>
-        <p class="news_all"><a href="#">ニュース一覧を見る</a></p>
+        <p class="news_all"><RouterLink v-bind:to="{name:'AllNews'}">ニュース一覧を見る</RouterLink></p>
     </section>
     <section class="newitems">
         <h1>NEW ITEMS</h1>
@@ -158,7 +158,11 @@ h1{
 }
 .news a{
     padding: 10px 20px 10px 20px;
-    color: #f25042;
+    color: #cc7714;
+    font-size: 20px;
+}
+.news .date{
+    color: #9c9c9c;
 }
 .news_all{
     text-align: center;
@@ -166,9 +170,10 @@ h1{
 .news_all a{
     border: solid #898989;
     border-radius: 5%;
-    padding: 10px 20% 10px 20%;
+    padding: 10px 20px 10px 20px;
     text-decoration: none;
     color: #3a3838;
+    font-size: 20px;
 }
 
 /*new items*/

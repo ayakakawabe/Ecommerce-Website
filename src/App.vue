@@ -53,7 +53,7 @@ const navClose=():void=>{
     <nav class="nav">
       <div class="nav_close"><img src="./assets/icon/close_icon.png" alt="閉じる" v-on:click="navClose"></div>
       <div class="nav_category">
-        <p>CATEGORY</p>
+        <h1>CATEGORY</h1>
         <ul>
           <li v-for="[id,list] in categoryList" v-bind:key="id">
             <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}" v-on:click="navClose">{{ list.titleJP }}</RouterLink>
@@ -61,8 +61,9 @@ const navClose=():void=>{
         </ul>
       </div>
       <div class="nav_other">
-        <P>OTHER</P>
+        <h1>OTHER</h1>
         <ul>
+          <li><RouterLink v-bind:to="{name:'AllNews'}" v-on:click="navClose">お知らせ</RouterLink></li>
           <li><a href="#">ご利用ガイド</a></li>
           <li><a href="#">お問い合わせ</a></li>
         </ul>
@@ -77,6 +78,7 @@ const navClose=():void=>{
         <h1>LINEでお知らせを受け取る</h1>
         <p class="line_add_button"><a href="#">LINEでお友達登録</a></p>
     </div>
+    <nav>
     <div class="links">
       <h2>CATEGORY</h2>
       <div class="footer_caregory">
@@ -91,6 +93,11 @@ const navClose=():void=>{
       </div>
       <h2>SHOPPING GUIDE</h2>
       <div class="footer_guide">
+        <ul>
+          <li key="newsLink">
+            <RouterLink v-bind:to="{name:'AllNews'}">お知らせ</RouterLink>
+          </li>
+        </ul>
         <p><a href="#">ご利用ガイド</a></p>
         <p><a href="#">セキュリティポリシー</a></p>
         <p><a href="#">お問い合わせ</a></p>
@@ -101,6 +108,7 @@ const navClose=():void=>{
         <p><a href="#">mercari</a></p>
       </div>
     </div>
+    </nav>
     <div class="footer_card_info">
       <img src="./assets/icon/st_payments_docs_site_sticker_card_full_260x60.png">
     </div>
@@ -174,7 +182,7 @@ header{
     right: -350px;
     padding-left: 30px;
 }
-.nav p,.nav ul li a{
+.nav h1,.nav ul li a{
     color: #dedede;
     text-decoration: none;
 }

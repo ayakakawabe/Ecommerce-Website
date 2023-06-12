@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ItemType } from '@/interfaces';
-import router from '@/router';
 import { watch } from 'vue';
 import { useRoute, type Router} from 'vue-router';
 

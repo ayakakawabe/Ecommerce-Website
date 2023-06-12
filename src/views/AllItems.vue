@@ -19,7 +19,7 @@ allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400
     <div>
         <ul class="itemList">
             <li v-for="[id,item] in allItemList">
-                <RouterLink v-bind:to="{name:'Item',params:{item:item.name}}"><img v-bind:src="item.imgUrl"><div class="description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></RouterLink></li>
+                <RouterLink v-bind:to="{name:'Item',params:{id:item.id}}"><img v-bind:src="item.imgUrl"><div class="description"><p class="name">{{ item.name }}</p><p class="price">￥{{ item.price }}</p></div></RouterLink></li>
         </ul>
     </div>
 </template>

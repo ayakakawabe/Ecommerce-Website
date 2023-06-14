@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import {reactive,provide} from "vue";
-import type { CategoryType,ItemType } from './interfaces';
+import type { CategoryType,ItemType,ItemTypeAll } from './interfaces';
+
+
+const itemList=new Map<number,ItemTypeAll>();
+itemList.set(1,{id:1,name:"p1",price:1000,category:"lace",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(2,{id:2,name:"p1",price:1000,category:"accessories",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(3,{id:3,name:"p1",price:1000,category:"parts",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(4,{id:4,name:"p1",price:1000,category:"button",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(5,{id:5,name:"p1",price:1000,category:"paper",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(6,{id:6,name:"p1",price:1000,category:"doll",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(7,{id:7,name:"p1",price:1000,category:"interior",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(8,{id:8,name:"p1",price:1000,category:"orogonal",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(9,{id:9,name:"p1",price:1000,category:"others",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+itemList.set(10,{id:10,name:"p1",price:1000,category:"kitchen",imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+
+provide("itemList",reactive(itemList));
 
 const categoryList=new Map<string,CategoryType>();
 categoryList.set("lace",{title:"Lace",titleJP:"レース・布",imgUrl:"http://placehold.jp/500x350.png"});
@@ -18,12 +33,12 @@ categoryList.set("others",{title:"Others",titleJP:"その他",imgUrl:"http://pla
 provide("categoryList",reactive(categoryList));
 
 const newItems=new Map<number,ItemType>();
-newItems.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 newItems.set(2,{id:2,name:"p2",price:1100,imgUrl:"http://placehold.jp/400x400.png",description:"hogehoge"});
-newItems.set(3,{id:3,name:"p3",price:1200,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
-newItems.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
-newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
-newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+newItems.set(3,{id:3,name:"p3",price:1200,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
+newItems.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
+newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
+newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 
 
 const navOpen=():void=>{
@@ -64,8 +79,8 @@ const navClose=():void=>{
         <h1>OTHER</h1>
         <ul>
           <li><RouterLink v-bind:to="{name:'AllNews'}" v-on:click="navClose">お知らせ</RouterLink></li>
-          <li><a href="#">ご利用ガイド</a></li>
-          <li><a href="#">お問い合わせ</a></li>
+          <li><RouterLink v-bind:to="{name:'Guide'}" v-on:click="navClose">ご利用ガイド</RouterLink></li>
+          <li><RouterLink v-bind:to="{name:'Inquiry'}" v-on:click="navClose">お問い合わせ</RouterLink></li>
         </ul>
       </div>
     </nav>
@@ -94,18 +109,17 @@ const navClose=():void=>{
       <h2>SHOPPING GUIDE</h2>
       <div class="footer_guide">
         <ul>
-          <li key="newsLink">
-            <RouterLink v-bind:to="{name:'AllNews'}">お知らせ</RouterLink>
-          </li>
-        </ul>
-        <p><a href="#">ご利用ガイド</a></p>
-        <p><a href="#">セキュリティポリシー</a></p>
-        <p><a href="#">お問い合わせ</a></p>
+          <li key="newsLink"><RouterLink v-bind:to="{name:'AllNews'}">お知らせ</RouterLink></li>
+          <li><RouterLink v-bind:to="{name:'Guide'}">ご利用ガイド</RouterLink></li>
+          <li><RouterLink v-bind:to="{name:'Inquiry'}">お問い合わせ</RouterLink></li>
+        </ul>  
       </div>
       <h2>ONLINE STORE</h2>
       <div class="footer_online_">
-        <p><a href="#">STORES</a></p>
-        <p><a href="#">mercari</a></p>
+        <ul>
+          <li><a href="#">STORES</a></li>
+          <li><a href="#">mercari</a></li>
+        </ul>
       </div>
     </div>
     </nav>

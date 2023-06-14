@@ -1,23 +1,28 @@
 <script setup lang="ts">
 import type { ItemTypeLong } from '@/interfaces';
 import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 
 const route=useRoute();
 const itemName=Number(route.params.id);
 
 const item=new Map<number,ItemTypeLong>();
-item.set(1,{id:1,name:"p1",price:1000,imgUrl:["http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png","http://placehold.jp/700x700.png"],description:"hogrhoge"});
+item.set(1,{id:1,name:"p1",price:1000,imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
 const itemData=item.get(1) as ItemTypeLong;
 const imgUrl:string[]=itemData.imgUrl.filter((url):url is string=>typeof url=="string");
+const nowImgIndex=ref(0);
+const changeImg=(index:number):void=>{
+    nowImgIndex.value=index;
+}
 </script>
 <template>
     <div class="img_slide">
-        <img v-bind:src="imgUrl[0]">
+        <img v-bind:src="imgUrl[nowImgIndex]">
     </div>
     <div class="img_toolbar">
         <ul>
-            <li v-for="smallImg in imgUrl">
-                <img v-bind:src="smallImg">
+            <li v-for="(smallImg,index) in imgUrl" v-bind:key="index">
+                <img v-bind:src="smallImg" v-on:click="changeImg(index)">
             </li>
         </ul>
     </div>
@@ -25,7 +30,7 @@ const imgUrl:string[]=itemData.imgUrl.filter((url):url is string=>typeof url=="s
     <p class="name">{{ itemData.name }}</p>
     <p class="price_tag">PRICE</p>
     <p class="price">￥{{ itemData.price }}</p>
-    <p class="question"><a href="#">この商品について問い合わせる</a></p>
+    <p class="question"><RouterLink v-bind:to="{name:'Inquiry'}">この商品について問い合わせる</RouterLink></p>
     <p class="buy_button"><button>buy</button></p>
     <p calss="description">{{ itemData.description }}</p>
 </template>
@@ -50,10 +55,10 @@ const imgUrl:string[]=itemData.imgUrl.filter((url):url is string=>typeof url=="s
     margin:30px 20px 20px 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 .img_toolbar li{
-    text-align: center;
+    width:100px;
+    margin: 5px;
 }
 .img_toolbar img{
     width: 100px;

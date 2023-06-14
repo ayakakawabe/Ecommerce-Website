@@ -25,3 +25,12 @@ export interface ItemTypeLong{
     imgUrl:string[],
     description:string
 }
+
+export interface ItemTypeAll{
+    id:number,
+    name:string,
+    price:number,
+    category:string,
+    imgUrl:string[],
+    description:string
+}

@@ -35,11 +35,26 @@ const routerSetting:RouteRecordRaw[]=[
     component:()=>{
       return import("@/views/AllNews.vue")
     }
-  },{
+  },
+  {
     path:"/news/:id",
     name:"News",
     component:()=>{
       return import("@/views/News.vue")
+    }
+  },
+  {
+    path:"/guide",
+    name:"Guide",
+    component:()=>{
+      return import("@/views/Guide.vue")
+    }
+  },
+  {
+    path:"/inquiry",
+    name:"Inquiry",
+    component:()=>{
+      return import("@/views/Inquiry.vue")
     }
   }
 ];

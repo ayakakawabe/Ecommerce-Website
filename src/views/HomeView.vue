@@ -159,7 +159,6 @@ h1{
 .news a{
     padding: 10px 20px 10px 20px;
     color: #cc7714;
-    font-size: 20px;
 }
 .news .date{
     color: #9c9c9c;
@@ -173,7 +172,7 @@ h1{
     padding: 10px 20px 10px 20px;
     text-decoration: none;
     color: #3a3838;
-    font-size: 20px;
+    line-height: normal;
 }
 
 /*new items*/

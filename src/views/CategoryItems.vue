@@ -64,4 +64,7 @@ ul{
     margin-top: auto;
     padding: 40px 40px 60px 40px;
 }
+a{
+    text-decoration: none;
+}
 </style>

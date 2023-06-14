@@ -165,6 +165,7 @@ h1{
 }
 .news_all{
     text-align: center;
+    margin-top: 35px;
 }
 .news_all a{
     border: solid #898989;

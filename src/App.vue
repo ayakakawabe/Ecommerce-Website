@@ -189,11 +189,11 @@ header{
 /*nav*/
 .nav{
     height: 100vh;
-    width: 350px;
+    width: 370px;
     background-color: #323232;
     position: fixed;
     top: 0;
-    right: -350px;
+    right: -370px;
     padding-left: 30px;
 }
 .nav h1,.nav ul li a{
@@ -211,7 +211,7 @@ header{
 }
 
 .nav_show{
-    transform: translate3d(-350px,0,0);
+    transform: translate3d(-370px,0,0);
 }
 .nav{
     transition: transform 0.3s;

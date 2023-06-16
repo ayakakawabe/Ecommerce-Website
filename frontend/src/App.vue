@@ -48,7 +48,16 @@ const navClose=():void=>{
   document.getElementsByTagName("nav")[0].classList.remove("nav_show");
 }
 
-
+const fetchData=async()=>{
+  try{
+    const response=await fetch("http://localhost:8000/HelloWorld");
+    const data=await response.json();
+    console.log(data);
+  }catch(error){
+    console.error(error);
+  }
+};
+fetchData();
 </script>
 
 <template>

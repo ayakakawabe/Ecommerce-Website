@@ -17,6 +17,11 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 
+# FastAPI_envはvenvで作成した仮想環境
+/FastAPI_env/
+
+__pycache__
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

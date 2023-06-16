@@ -1,10 +1,54 @@
 # 概要
 
-ECサイトのサンプル(フロントエンドのみ)
+ECサイトのサンプル
+
+## フロントエンド
+
+言語：TypeScript
 
 フレームワーク：Vue
 
-言語：TypeScript
+## バックエンド
+
+言語:Python
+
+フレームワーク：FastAPI
+
+# ローカルサーバの立て方
+
+FastAPIとvueで2つのローカルサーバを立てる必要がある
+
+# FastAPI
+
+FastAPIではvenvで仮想環境を作っているので、activateにする必要がある
+
+```sh
+FastAPI_env/Scripts/activate
+```
+
+仮想環境を終了する時は
+
+```sh
+deactivate
+```
+
+ローカルサーバを立てる
+
+```sh
+cd backend/
+uvicorn main:app --reload
+```
+
+http://127.0.0.1:8000/
+
+# vue
+
+```sh
+cd frontend/
+npm run dev
+```
+
+http://127.0.0.1:8080/
 
 # Vue.jsについて
 

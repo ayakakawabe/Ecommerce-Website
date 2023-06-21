@@ -16,24 +16,32 @@ ECサイトのサンプル
 
 # ローカルサーバの立て方
 
-FastAPIとvueで2つのローカルサーバを立てる必要がある
+postgreSQL/FastAPI/vueのローカルサーバを立てる必要
 
-# FastAPI
+## postgreSQL
 
-FastAPIではvenvで仮想環境を作っているので、activateにする必要がある
+```sh
+pg_ctl start
+```
+
+host:localhost
+
+port:5432
+
+## FastAPI
+
+FastAPIではvenvで仮想環境を作っているので、activateにする
 
 ```sh
 FastAPI_env/Scripts/activate
 ```
 
-仮想環境を終了する時は
-
+仮想環境を終了する時
 ```sh
 deactivate
 ```
 
 ローカルサーバを立てる
-
 ```sh
 cd backend/
 uvicorn main:app --reload
@@ -41,7 +49,7 @@ uvicorn main:app --reload
 
 http://127.0.0.1:8000/
 
-# vue
+## vue
 
 ```sh
 cd frontend/

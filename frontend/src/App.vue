@@ -50,7 +50,7 @@ const navClose=():void=>{
 
 const fetchData=async()=>{
   try{
-    const response=await fetch("http://localhost:8000/HelloWorld");
+    const response=await fetch("http://localhost:8000/NewsData");
     const data=await response.json();
     console.log(data);
   }catch(error){

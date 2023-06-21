@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import treat_news_data;
 
 app=FastAPI()
 
@@ -10,6 +11,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/HelloWorld")
+@app.get("/NewsData")
 def read_root():
-    return {"Hello":"World"}
+    return treat_news_data.data

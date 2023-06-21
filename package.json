@@ -1,0 +1,22 @@
+{
+  "name": "ivy-webapp-sample",
+  "version": "1.0.0",
+  "description": "ECサイトのサンプル",
+  "main": "index.js",
+  "scripts": {
+    "api":"cd ./backend && uvicorn main:app --reload",
+    "vue":"cd ./frontend && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayakakawabe/Ecommerce-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayakakawabe/Ecommerce-Website/issues"
+  },
+  "homepage": "https://github.com/ayakakawabe/Ecommerce-Website#readme"
+}

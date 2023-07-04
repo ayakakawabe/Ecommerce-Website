@@ -111,6 +111,8 @@ def insert_data_from_csv(table_name:str,csv_file_name:str):
                         new_serial_value=max_serial_value+1
                         cur.execute(f"ALTER SEQUENCE {table_name}_{col_data[0]}_seq RESTART WITH {new_serial_value};")
                         conn.commit()
+        else:
+            print("csvファイルのフォーマットが異なります。")
 
 #insert_data_from_csv("news","news.csv")
 #print(get_json_table_data("news"))

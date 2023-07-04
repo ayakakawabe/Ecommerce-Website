@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import treat_news_data;
+import database.treat_news_data as news
 
 app=FastAPI()
 
@@ -11,6 +11,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/NewsData")
-def read_root():
-    return treat_news_data.data
+@app.get("/NewsList")
+def get_all_newslist():
+    return news.json_newslist
+
+@app.get("/New_NewsList")
+def get_new_newslist():
+    return news.json_new_newslist
+
+@app.get("/NewsData/{id}")
+async def get_newsdata_by_id(id:int):
+    return news.get_json_newsdata_by_id(id)

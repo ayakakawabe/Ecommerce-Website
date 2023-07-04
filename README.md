@@ -20,6 +20,8 @@ postgreSQL/FastAPI/vueのローカルサーバを立てる必要
 
 ## postgreSQL
 
+### サーバ起動
+
 ```sh
 pg_ctl start
 ```
@@ -28,7 +30,21 @@ host:localhost
 
 port:5432
 
+### サーバ停止
+
+```sh
+pg_ctl stop
+```
+
+### サーバ状態の確認
+
+```sh
+pg_ctl status
+```
+
 ## FastAPI
+
+### 仮想環境
 
 FastAPIではvenvで仮想環境を作っているので、activateにする
 
@@ -41,19 +57,30 @@ FastAPI_env/Scripts/activate
 deactivate
 ```
 
-ローカルサーバを立てる
+### サーバ起動
+
 ```sh
 cd backend/
 uvicorn main:app --reload
+```
+または
+```sh
+npm run api
 ```
 
 http://127.0.0.1:8000/
 
 ## vue
 
+### サーバ起動
+
 ```sh
 cd frontend/
 npm run dev
+```
+または
+```sh
+npm run vue
 ```
 
 http://127.0.0.1:8080/

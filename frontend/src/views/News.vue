@@ -1,13 +1,28 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import type { NewsType } from '@/interfaces';
+import { fetchData } from '@/api';
+import {ref} from 'vue';
+
 
 const route=useRoute();
 const id=Number(route.params.id);
 
-const newsList=new Map<number,NewsType>();
-newsList.set(1,{date:"2023-06-12",title:"【お知らせ】ホームページをリニューアルしました",description:"aaaaa"});
-const newsData=newsList.get(1) as NewsType;
+const newsData=ref<NewsType>({date:"",title:"",detail:""});
+(async()=>{
+    const response=await fetchData("http://localhost:8000/NewsData/"+id);
+    if(response.data){
+        const data=JSON.parse(response.data);
+        newsData.value=data;
+    }else if(response.error){
+        console.log(response.error);
+    }
+})();
+
+const formatText=(text:string):string=>{
+    return text.split("\\r\\n").join("<br>");
+}
+
 </script>
 
 <template>
@@ -15,7 +30,7 @@ const newsData=newsList.get(1) as NewsType;
     <section>
         <p class="date">{{ newsData.date }}</p>
         <h2 class="title">{{ newsData.title }}</h2>
-        <p class="description">{{ newsData.description }}</p>
+        <p class="detail" v-html="formatText(newsData.detail)"></p>
     </section>
 </template>
 
@@ -28,8 +43,9 @@ section{
 }
 .title{
     font-size: x-large;
+    margin: 30px 0 60px 0;
 }
-.description{
+.detail{
     margin: 30px;
 }
 </style>

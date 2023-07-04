@@ -2,6 +2,7 @@
 import { onMounted,watch,ref,inject } from 'vue';
 import { RouterLink } from 'vue-router';
 import type {ItemType,NewsType,CategoryType} from "@/interfaces";
+import {fetchData} from "@/api";
 
 const slideShowImages=["http://placehold.jp/3d4070/ffffff/1920x1200.png","http://placehold.jp/703e3e/ffffff/1920x1200.png","http://placehold.jp/70673e/ffffff/1920x1200.png"];
 let slideShowNumber=ref(0);
@@ -60,11 +61,20 @@ watch(slideShowNumber,
         toolbar1.style.color="#e3e3e3";
         toolbar2.style.color="#3a3838";
     }
-})
+});
 
-const newsList=new Map<number,NewsType>();
-newsList.set(1,{date:"2023-01-01",title:"old news",description:"hogehoge"});
-newsList.set(2,{date:"2024-1-1",title:"new news",description:"hogehoge"});
+const newsList=ref(new Map<number,NewsType>());
+(async () => {
+  const response = await fetchData("http://localhost:8000/New_NewsList");
+  if(response.data){
+    const data=JSON.parse(response.data);
+    for(let i=0;i<data.length;i++){
+        newsList.value.set(data[i]["id"],{date:String(data[i]["date"]),title:String(data[i]["title"]),detail:String(data[i]["detail"])});
+    };
+  }else if(response.error){
+    console.log(response.error);//エラー時の処理を考える
+  }
+})();
 
 const newItems=new Map<number,ItemType>();
 newItems.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});

@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import type { NewsType } from '@/interfaces';
-const newsList=new Map<number,NewsType>();
-newsList.set(1,{date:"2023-06-12",title:"【お知らせ】ホームページをリニューアルしました",description:"aaaaa"});
-newsList.set(2,{date:"2023-01-01",title:"old news",description:"hogehoge"});
-newsList.set(3,{date:"2024-01-01",title:"new news",description:"hogehoge"});
+import { fetchData } from "@/api";
+import { ref } from "vue";
+
+const newsList=ref(new Map<number,NewsType>());
+(async()=>{
+    const response=await fetchData("http://localhost:8000/NewsList/");
+    if(response.data){
+        const data=JSON.parse(response.data)["news"];
+        for(let i=0;i<data.length;i++){
+            newsList.value.set(Number(data[i]["id"]),{date:String(data[i]["date"]),title:String(data[i]["title"]),detail:String(data[i]["detail"])});
+        }
+    }else if(response.error){
+        console.log(response.error);//エラー時の処理
+    }
+})();
 </script>
 <template>
     <h1 class="categoryTitle">NEWS</h1>

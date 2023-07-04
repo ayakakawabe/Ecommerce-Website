@@ -9,7 +9,7 @@ export interface ItemType{
 export interface NewsType{
     date:string,
     title:string,
-    description:string
+    detail:string
 }
 
 export interface CategoryType{

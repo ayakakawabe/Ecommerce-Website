@@ -23,7 +23,8 @@ export interface ItemTypeLong{
     name:string,
     price:number,
     imgUrl:string[],
-    description:string
+    description:string,
+    quantity:number
 }
 
 export interface ItemTypeAll{

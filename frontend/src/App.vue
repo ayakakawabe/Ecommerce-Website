@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import {reactive,provide} from "vue";
+import {reactive,provide,ref} from "vue";
 import type { CategoryType,ItemType,ItemTypeAll } from './interfaces';
+import { fetchData } from './api';
 
 
 const itemList=new Map<number,ItemTypeAll>();
@@ -18,20 +19,6 @@ itemList.set(10,{id:10,name:"p1",price:1000,category:"kitchen",imgUrl:["http://p
 
 provide("itemList",reactive(itemList));
 
-const categoryList=new Map<string,CategoryType>();
-categoryList.set("lace",{title:"Lace",titleJP:"レース・布",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("accessories",{title:"Accessories",titleJP:"アクセサリー",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("parts",{title:"Accressories Parts",titleJP:"アクセサリーパーツ",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("button",{title:"Button",titleJP:"ボタン",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("paper",{title:"Paper",titleJP:"ペーパー(ポストカード・雑誌)",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("doll",{title:"Doll",titleJP:"ドール",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("interior",{title:"Interior",titleJP:"インテリア雑貨",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("kitchen",{title:"Kitchen",titleJP:"キッチン雑貨",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("original",{title:"Ivy Original",titleJP:"Ivyオリジナル",imgUrl:"http://placehold.jp/500x350.png"});
-categoryList.set("others",{title:"Others",titleJP:"その他",imgUrl:"http://placehold.jp/500x350.png"});
-
-provide("categoryList",reactive(categoryList));
-
 const newItems=new Map<number,ItemType>();
 newItems.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 newItems.set(2,{id:2,name:"p2",price:1100,imgUrl:"http://placehold.jp/400x400.png",description:"hogehoge"});
@@ -40,6 +27,26 @@ newItems.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.pn
 newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 
+
+const categoryList=ref(new Map<string,CategoryType>());
+
+(async()=>{
+  const response=await fetchData("http://127.0.0.1:8000/Category");
+  if(response.data){
+    const data=JSON.parse(response.data)["category"];
+    console.log(data);
+    for(let i=0;i<data.length;i++){
+      console.log(`@/assets/image/category/${data[i]["imgpath"]}`)
+      let imgUrl= new URL(`./assets/image/category/${data[i]["imgpath"]}`,import.meta.url).href
+      console.log(imgUrl)
+      categoryList.value.set(data[i]["id"],{title:data[i]["title"],titleJP:data[i]["titlejp"],imgUrl:imgUrl})
+    }
+  }else if(response.error){
+    console.log(response.error)
+  }
+})();
+
+provide("categoryList",reactive(categoryList));
 
 const navOpen=():void=>{
   document.getElementsByTagName("nav")[0].classList.add("nav_show");

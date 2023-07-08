@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import database.treat_news_data as news
+import database.scripts.search_news as news
+import database.scripts.search_category as category
 
 app=FastAPI()
 
@@ -22,3 +23,7 @@ def get_new_newslist():
 @app.get("/NewsData/{id}")
 async def get_newsdata_by_id(id:int):
     return news.get_json_newsdata_by_id(id)
+
+@app.get("/Category")
+def get_categorylist():
+    return category.json_categorylist

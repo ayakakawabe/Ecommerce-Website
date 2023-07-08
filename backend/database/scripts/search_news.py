@@ -1,9 +1,11 @@
+import sys
+sys.path.append("..")
+
 import database.database as db
 import json
 
 json_newslist=db.get_json_table_data("news")
 newslist=json.loads(json_newslist)["news"]
-print(newslist)
 
 def get_json_newsdata_by_id(search_id):
     for newsdata in newslist:

@@ -80,7 +80,7 @@ def create_table(table_name:str,col_name_SQLtype:dict[str,str]):
                 conn.rollback()
 
 def insert_data_from_csv(table_name:str,csv_file_name:str):
-    csv_path=os.path.join("backend\\csv_data\\",csv_file_name)
+    csv_path=os.path.join("./csv_data/",csv_file_name)
     with open(csv_path,"r",encoding="utf-8-sig") as csvfile:
         reader=csv.reader(csvfile)
         header=next(reader)
@@ -97,7 +97,7 @@ def insert_data_from_csv(table_name:str,csv_file_name:str):
                         sql+=f"{header[len(header)-1]})"
                         sql+=f" VALUES ('{row[0]}','{row[1]}','{row[2]}');"
                         cur.execute(sql)
-                    cur.execute("SELECT * FROM news;")
+                    cur.execute(f"SELECT * FROM {table_name};")
                     result=cur.fetchall()
                     for row in result:
                         print(row)
@@ -108,6 +108,8 @@ def insert_data_from_csv(table_name:str,csv_file_name:str):
                         conn.rollback()
                         cur.execute(f"SELECT MAX({col_data[0]}) FROM {table_name};")
                         max_serial_value=cur.fetchone()[0]
+                        if(max_serial_value==None):
+                            max_serial_value=0
                         new_serial_value=max_serial_value+1
                         cur.execute(f"ALTER SEQUENCE {table_name}_{col_data[0]}_seq RESTART WITH {new_serial_value};")
                         conn.commit()

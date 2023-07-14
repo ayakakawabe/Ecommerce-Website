@@ -17,6 +17,7 @@ const newsList=ref(new Map<number,NewsType>());
 })();
 </script>
 <template>
+    <img src="../assets/image/news.png" class="topImg">
     <h1 class="categoryTitle">NEWS</h1>
     <section>
         <div class="news" v-for="[id,news] in newsList">
@@ -27,6 +28,9 @@ const newsList=ref(new Map<number,NewsType>());
 </template>
 
 <style scoped>
+.topImg{
+    width: 100%;
+}
 section{
     margin: 40px;
     display: flex;

@@ -16,7 +16,7 @@ const routerSetting:RouteRecordRaw[]=[
     }
   },
   {
-    path:"/category/:category",
+    path:"/category/:categoryId",
     name:"CategoryItems",
     component:()=>{
       return import("@/views/CategoryItems.vue");

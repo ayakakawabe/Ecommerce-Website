@@ -122,7 +122,7 @@ const categoryList=inject("categoryList") as Map<string,CategoryType>;
         <h1>CATEGORY</h1>
         <ul class="category">
             <li v-for="[id,list] in categoryList" v-bind:key="id">
-                <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}"><img v-bind:src="list.imgUrl">{{ list.titleJP }}</RouterLink>
+                <RouterLink v-bind:to="{name:'CategoryItems',params:{categoryId:id}}"><img v-bind:src="list.imgUrl">{{ list.titleJP }}</RouterLink>
             </li>
         </ul>
     </section>    

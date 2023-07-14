@@ -1,11 +1,25 @@
 <script setup lang="ts">
-import type { ItemType } from '@/interfaces';
-import { watch } from 'vue';
-import { useRoute, type Router} from 'vue-router';
+import type { ItemType,CategoryType } from '@/interfaces';
+import { watch,inject, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 const route=useRoute();
+const categoryList=inject("categoryList") as Map<number,CategoryType>;
+
+let categoryId:number;
+
+let nowCategoryData:CategoryType;
 let categoryTitle:string;
-categoryTitle=route.params.category as string;
+let categoryImgUrl:string;
+
+const changeCategoryData=(nowCategoryId:number):void=>{
+    nowCategoryData=categoryList.get(nowCategoryId) as CategoryType;
+    categoryTitle=nowCategoryData["title"];
+    categoryImgUrl=nowCategoryData["imgUrl"];
+};
+
+categoryId=Number(route.params.categoryId);
+changeCategoryData(categoryId);
 
 const allItemList=new Map<number,ItemType>();
 allItemList.set(1,{id:1,name:"p1",price:1000,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
@@ -14,9 +28,15 @@ allItemList.set(3,{id:3,name:"p3",price:1200,imgUrl:"http://placehold.jp/400x400
 allItemList.set(4,{id:4,name:"p4",price:1300,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 allItemList.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
 allItemList.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhogr"});
+let topImgElement:HTMLImageElement;
+onMounted(()=>{
+    topImgElement=document.getElementsByClassName("topImage")[0].firstElementChild as HTMLImageElement;
+});
 
 watch(route,():void=>{
-    categoryTitle=route.params.category as string; 
+    categoryId=Number(route.params.categoryId);
+    console.log(categoryId);
+    changeCategoryData(categoryId);
     //商品データの変更も追加する   
 });
 
@@ -24,7 +44,7 @@ watch(route,():void=>{
 
 <template>
     <div class="topImage">
-        <img src="http://placehold.jp/3d4070/ffffff/1920x1200.png">
+        <img v-bind:src="categoryImgUrl">
     </div>
     <h1 class="categoryTitle">{{ categoryTitle }}</h1>
     <div>

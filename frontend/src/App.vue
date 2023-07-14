@@ -28,7 +28,7 @@ newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.pn
 newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 
 
-const categoryList=ref(new Map<string,CategoryType>());
+const categoryList=ref(new Map<number,CategoryType>());
 
 (async()=>{
   const response=await fetchData("http://127.0.0.1:8000/Category");
@@ -36,9 +36,7 @@ const categoryList=ref(new Map<string,CategoryType>());
     const data=JSON.parse(response.data)["category"];
     console.log(data);
     for(let i=0;i<data.length;i++){
-      console.log(`@/assets/image/category/${data[i]["imgpath"]}`)
       let imgUrl= new URL(`./assets/image/category/${data[i]["imgpath"]}`,import.meta.url).href
-      console.log(imgUrl)
       categoryList.value.set(data[i]["id"],{title:data[i]["title"],titleJP:data[i]["titlejp"],imgUrl:imgUrl})
     }
   }else if(response.error){
@@ -46,7 +44,7 @@ const categoryList=ref(new Map<string,CategoryType>());
   }
 })();
 
-provide("categoryList",reactive(categoryList));
+provide("categoryList",categoryList.value);
 
 const navOpen=():void=>{
   document.getElementsByTagName("nav")[0].classList.add("nav_show");
@@ -77,7 +75,7 @@ const navClose=():void=>{
         <h1>CATEGORY</h1>
         <ul>
           <li v-for="[id,list] in categoryList" v-bind:key="id">
-            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}" v-on:click="navClose">{{ list.titleJP }}</RouterLink>
+            <RouterLink v-bind:to="{name:'CategoryItems',params:{categoryId:id}}" v-on:click="navClose">{{ list.titleJP }}</RouterLink>
           </li>
         </ul>
       </div>
@@ -108,7 +106,7 @@ const navClose=():void=>{
             <RouterLink v-bind:to="{name:'AllItems'}">全商品一覧</RouterLink>
           </li>
           <li v-for="[id,list] in categoryList" v-bind:key="id">
-            <RouterLink v-bind:to="{name:'CategoryItems',params:{category:list.title}}">{{ list.titleJP }}</RouterLink>>
+            <RouterLink v-bind:to="{name:'CategoryItems',params:{categoryId:id}}">{{ list.titleJP }}</RouterLink>>
           </li>
         </ul>
       </div>

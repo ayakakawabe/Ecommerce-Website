@@ -1,6 +1,6 @@
 # 概要
 
-ECサイトのサンプル
+ECサイトのサンプル（作成中）
 
 ## フロントエンド
 
@@ -14,9 +14,13 @@ ECサイトのサンプル
 
 フレームワーク：FastAPI
 
+## データベース
+
+PostgreSQL
+
 # ローカルサーバの立て方
 
-postgreSQL/FastAPI/vueのローカルサーバを立てる必要
+postgreSQL/FastAPI/vueを実行するためのローカルサーバを立てる
 
 ## postgreSQL
 

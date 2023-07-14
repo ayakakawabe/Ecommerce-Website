@@ -3,9 +3,17 @@ import { onMounted,watch,ref,inject } from 'vue';
 import { RouterLink } from 'vue-router';
 import type {ItemType,NewsType,CategoryType} from "@/interfaces";
 import {fetchData} from "@/api";
+import { API_RootUrl } from '@/server_config';
 
-const slideShowImages=["http://placehold.jp/3d4070/ffffff/1920x1200.png","http://placehold.jp/703e3e/ffffff/1920x1200.png","http://placehold.jp/70673e/ffffff/1920x1200.png"];
+
+//トップ画像の処理
+let slideShowImages:Array<string>=[];
+slideShowImages[0]=new URL("../assets/image/home_slideShow/home_img1.png",import.meta.url).href;
+slideShowImages[1]=new URL("../assets/image/home_slideShow/home_img2.png",import.meta.url).href;
+slideShowImages[2]=new URL("../assets/image/home_slideShow/home_img3.png",import.meta.url).href;
+
 let slideShowNumber=ref(0);
+
 const changeSlideNumber=(slideNumber:number,num:number,Images:string[]):number=>{
     let result=slideNumber;
     if(slideNumber+num>=0 && slideNumber+num<Images.length){
@@ -17,11 +25,13 @@ const changeSlideNumber=(slideNumber:number,num:number,Images:string[]):number=>
     }
     return result;
 };
+
 let elementSlideShowImg:HTMLImageElement;
 let toolbar0:HTMLElement;
 let toolbar1:HTMLElement;
 let toolbar2:HTMLElement;
 
+//コンポーネントマウント後でないと、imgタグを代入できないため
 onMounted(
     ():void=>{
     elementSlideShowImg=document.getElementById("slideshow_img") as HTMLImageElement;
@@ -45,6 +55,7 @@ const slideShowToolbarClick_2=():void=>{
     slideShowNumber.value=2;
 };
 
+//表示画像が変わったときに、画像下の「・」の色を変更
 watch(slideShowNumber,
 ():void=>{
     elementSlideShowImg.src=slideShowImages[slideShowNumber.value];
@@ -63,9 +74,12 @@ watch(slideShowNumber,
     }
 });
 
+
+//ニュース（お知らせ）のデータ取得
+//ex)newsList.value.get(1)=>{1,{"2023-5-21","ニュースタイトル！","これはニュースの詳細です。"}}
 const newsList=ref(new Map<number,NewsType>());
 (async () => {
-  const response = await fetchData("http://localhost:8000/New_NewsList");
+  const response = await fetchData(`${API_RootUrl}/New_NewsList`);
   if(response.data){
     const data=JSON.parse(response.data);
     for(let i=0;i<data.length;i++){
@@ -92,7 +106,7 @@ const categoryList=inject("categoryList") as Map<string,CategoryType>;
 
     <div class="slideshow">
         <div class="slideshow_imgbox">
-            <img id="slideshow_img" src="http://placehold.jp/3d4070/ffffff/1920x1200.png">
+            <img id="slideshow_img" src="@/assets/image/home_slideShow/home_img1.png">
         </div>
         <div class="slideshow_toolbar">
             <div class="slideshow_0"><p v-on:click="slideShowToolbarClick_0">・</p></div>

@@ -2,10 +2,11 @@
 import type { NewsType } from '@/interfaces';
 import { fetchData } from "@/api";
 import { ref } from "vue";
+import { API_RootUrl } from '@/server_config';
 
 const newsList=ref(new Map<number,NewsType>());
 (async()=>{
-    const response=await fetchData("http://localhost:8000/NewsList/");
+    const response=await fetchData(`${API_RootUrl}/NewsList/`);
     if(response.data){
         const data=JSON.parse(response.data)["news"];
         for(let i=0;i<data.length;i++){
@@ -17,7 +18,7 @@ const newsList=ref(new Map<number,NewsType>());
 })();
 </script>
 <template>
-    <img src="../assets/image/news.png" class="topImg">
+    <img src="@/assets/image/news.png" class="topImg">
     <h1 class="categoryTitle">NEWS</h1>
     <section>
         <div class="news" v-for="[id,news] in newsList">

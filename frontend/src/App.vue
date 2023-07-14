@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import {reactive,provide,ref} from "vue";
-import type { CategoryType,ItemType,ItemTypeAll } from './interfaces';
-import { fetchData } from './api';
+import type { CategoryType,ItemType,ItemTypeAll } from '@/interfaces';
+import { fetchData } from '@/api';
+import { API_RootUrl } from '@/server_config';
 
 
 const itemList=new Map<number,ItemTypeAll>();
@@ -28,31 +29,30 @@ newItems.set(5,{id:5,name:"p5",price:1400,imgUrl:"http://placehold.jp/400x400.pn
 newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.png",description:"hogrhoge"});
 
 
+//カテゴリーのデータ処理
 const categoryList=ref(new Map<number,CategoryType>());
-
+//カテゴリーデータ取得
 (async()=>{
-  const response=await fetchData("http://127.0.0.1:8000/Category");
+  const response=await fetchData(`${API_RootUrl}/Category`);
   if(response.data){
     const data=JSON.parse(response.data)["category"];
-    console.log(data);
     for(let i=0;i<data.length;i++){
-      let imgUrl= new URL(`./assets/image/category/${data[i]["imgpath"]}`,import.meta.url).href
+      const imgUrl= new URL(`./assets/image/category/${data[i]["imgpath"]}`,import.meta.url).href
       categoryList.value.set(data[i]["id"],{title:data[i]["title"],titleJP:data[i]["titlejp"],imgUrl:imgUrl})
     }
   }else if(response.error){
     console.log(response.error)
   }
 })();
-
 provide("categoryList",categoryList.value);
 
+//スライドナビ開閉時の処理
 const navOpen=():void=>{
   document.getElementsByTagName("nav")[0].classList.add("nav_show");
 }
 const navClose=():void=>{
   document.getElementsByTagName("nav")[0].classList.remove("nav_show");
 }
-
 </script>
 
 <template>
@@ -62,15 +62,15 @@ const navClose=():void=>{
           <RouterLink v-bind:to="{name:'Home'}" class="header_home"><span>Ivy</span></RouterLink>
       </div>
       <div class="header_link">
-          <a href="Instagramのリンク" class="SNS_link"><img src="./assets/icon/Instagram_Glyph_Black.png" alt="Instagram"></a>
-          <a href="Facebookのリンク" class="SNS_link"><img src="./assets/icon/f_logo_RGB-Black_58.png" alt="Facebook"></a>    
+          <a href="Instagramのリンク" class="SNS_link"><img src="@/assets/icon/Instagram_Glyph_Black.png" alt="Instagram"></a>
+          <a href="Facebookのリンク" class="SNS_link"><img src="@/assets/icon/f_logo_RGB-Black_58.png" alt="Facebook"></a>    
       </div>
       <div class="humburger">
-          <img src="./assets/icon/hamburger.png" alt="menu" @click="navOpen">
+          <img src="@/assets/icon/hamburger.png" alt="menu" @click="navOpen">
       </div>
     </div>
     <nav class="nav">
-      <div class="nav_close"><img src="./assets/icon/close_icon.png" alt="閉じる" v-on:click="navClose"></div>
+      <div class="nav_close"><img src="@/assets/icon/close_icon.png" alt="閉じる" v-on:click="navClose"></div>
       <div class="nav_category">
         <h1>CATEGORY</h1>
         <ul>
@@ -128,13 +128,13 @@ const navClose=():void=>{
     </div>
     </nav>
     <div class="footer_card_info">
-      <img src="./assets/icon/st_payments_docs_site_sticker_card_full_260x60.png">
+      <img src="@/assets/icon/st_payments_docs_site_sticker_card_full_260x60.png">
     </div>
     <div class="footer_marks">
       <small>&copy; Ivy</small>
       <div class="footer_sns_link">
-        <a href="Facebookのリンク"><img src="./assets/icon/f_logo_RGB-White_58.png"></a>
-        <a href="Instagramのリンク"><img src="./assets/icon/Instagram_Glyph_White.png"></a>
+        <a href="Facebookのリンク"><img src="@/assets/icon/f_logo_RGB-White_58.png"></a>
+        <a href="Instagramのリンク"><img src="@/assets/icon/Instagram_Glyph_White.png"></a>
       </div>
     </div>
   </footer>

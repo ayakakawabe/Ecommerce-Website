@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import type { NewsType } from '@/interfaces';
 import { fetchData } from '@/api';
 import {ref} from 'vue';
+import { API_RootUrl } from '@/server_config';
 
 
 const route=useRoute();
@@ -10,7 +11,7 @@ const id=Number(route.params.id);
 
 const newsData=ref<NewsType>({date:"",title:"",detail:""});
 (async()=>{
-    const response=await fetchData("http://localhost:8000/NewsData/"+id);
+    const response=await fetchData(`${API_RootUrl}/NewsData/`+id);
     if(response.data){
         const data=JSON.parse(response.data);
         newsData.value=data;

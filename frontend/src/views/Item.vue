@@ -7,7 +7,7 @@ const route=useRoute();
 const itemName=Number(route.params.id);
 
 const item=new Map<number,ItemTypeLong>();
-item.set(1,{id:1,name:"p1",price:1000,imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge"});
+item.set(1,{id:1,name:"p1",price:1000,imgUrl:["http://placehold.jp/8c3636/fffff/700x700.png","http://placehold.jp/8c3671/fffff/700x700.png","http://placehold.jp/75368c/fffff/700x700.png","http://placehold.jp/44368c/fffff/700x700.png","http://placehold.jp/366b8c/fffff/700x700.png","http://placehold.jp/368c7d/fffff/700x700.png","http://placehold.jp/368c50/fffff/700x700.png","http://placehold.jp/658c36/fffff/700x700.png","http://placehold.jp/8c7d36/fffff/700x700.png","http://placehold.jp/8c5436/fffff/700x700.png"],description:"hogrhoge",quantity:1});
 const itemData=item.get(1) as ItemTypeLong;
 const imgUrl:string[]=itemData.imgUrl.filter((url):url is string=>typeof url=="string");
 const nowImgIndex=ref(0);

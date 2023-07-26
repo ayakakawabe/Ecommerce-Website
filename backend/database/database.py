@@ -78,10 +78,14 @@ def create_table(table_name:str,col_name_SQLtype:dict[str,str]):
                 conn.commit()
             else:
                 conn.rollback()
+def get_csv_file_path(csv_file_name:str):
+    current_path=os.path.dirname(os.path.abspath(__file__))
+    csv_file_path=os.path.join(current_path,"csv_data",csv_file_name)
+    return csv_file_path
 
 def insert_data_from_csv(table_name:str,csv_file_name:str):
-    csv_path=os.path.join("./csv_data/",csv_file_name)
-    with open(csv_path,"r",encoding="utf-8-sig") as csvfile:
+    #csv_path=os.path.join(csv_p)
+    with open(get_csv_file_path(csv_file_name),"r",encoding="utf-8-sig") as csvfile:
         reader=csv.reader(csvfile)
         header=next(reader)
         col_data_all=json.loads(get_json_columns_data(table_name))

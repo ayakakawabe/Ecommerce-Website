@@ -21,7 +21,7 @@ const newsData=ref<NewsType>({date:"",title:"",detail:""});
 })();
 
 const formatText=(text:string):string=>{
-    return text.split("\\r\\n").join("<br>");
+    return text.split("\\n").join("<br>");
 }
 
 </script>

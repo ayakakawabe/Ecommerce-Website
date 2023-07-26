@@ -30,6 +30,7 @@ newItems.set(6,{id:6,name:"p6",price:1500,imgUrl:"http://placehold.jp/400x400.pn
 
 
 //カテゴリーのデータ処理
+//ex)categoryList.value.get(1)=>{1,{"Lace","レース","./assets/image/category/lace.png"}}
 const categoryList=ref(new Map<number,CategoryType>());
 //カテゴリーデータ取得
 (async()=>{
@@ -45,6 +46,7 @@ const categoryList=ref(new Map<number,CategoryType>());
   }
 })();
 provide("categoryList",categoryList.value);
+
 
 //スライドナビ開閉時の処理
 const navOpen=():void=>{

@@ -52,18 +52,22 @@ const changeImg=(index:number):void=>{
 .img_toolbar ul{
     list-style: none;
     padding-left: 0;
-    margin:30px 20px 20px 20px;
+    margin:30px 50px 20px 50px;
     display: flex;
-    flex-wrap: wrap;
+    overflow: scroll;
 }
 .img_toolbar li{
     width:100px;
-    margin: 5px;
+    margin: 7px;
 }
+
 .img_toolbar img{
     width: 100px;
 }
-
+.img_toolbar img:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
 p{
     margin: 40px;
 }
